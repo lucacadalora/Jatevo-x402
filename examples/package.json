@@ -1,0 +1,20 @@
+{
+  "name": "jatevo-x402-examples",
+  "version": "1.0.0",
+  "description": "Example scripts for using Jatevo x402 LLM API",
+  "type": "module",
+  "scripts": {
+    "basic": "node basic.js",
+    "streaming": "node streaming.js",
+    "compare": "node compare-models.js"
+  },
+  "keywords": ["x402", "jatevo", "llm", "ai", "payment"],
+  "author": "Jatevo",
+  "license": "MIT",
+  "dependencies": {
+    "x402-axios": "^1.0.0",
+    "axios": "^1.6.0",
+    "viem": "^2.0.0",
+    "dotenv": "^16.0.0"
+  }
+}

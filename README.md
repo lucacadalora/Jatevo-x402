@@ -27,21 +27,25 @@ Learn more about the x402 standard at [x402.gitbook.io](https://x402.gitbook.io/
 ## Quick Start (Terminal/VSCode)
 
 ```bash
-npm install jatevo-x402-sdk axios
+npm install x402-axios axios viem
 ```
 
 ```javascript
-const { withPaymentInterceptor } = require('jatevo-x402-sdk');
-const axios = require('axios');
+import { withPaymentInterceptor } from 'x402-axios';
+import axios from 'axios';
+import { privateKeyToAccount } from 'viem/accounts';
 
-// Your private key (keep secure!)
-const PRIVATE_KEY = process.env.PRIVATE_KEY;
+// Configure your account with private key
+const account = privateKeyToAccount(process.env.PRIVATE_KEY || '0xPRIVATE_KEY_HERE');
 
-// Create client with payment handler
-const client = withPaymentInterceptor(axios.create(), PRIVATE_KEY);
+// Create axios client with x402 payment interceptor
+const client = withPaymentInterceptor(
+  axios.create({ baseURL: 'https://jatevo.ai' }),
+  account
+);
 
 // Call any model
-const response = await client.post('https://api.jatevo.ai/chat/completions/qwen', {
+const response = await client.post('/api/x402/llm/qwen', {
   messages: [
     { role: 'user', content: 'Hello!' }
   ]
@@ -73,14 +77,14 @@ All models cost $0.01 USDC per request:
 Replace `{model}` with any model from the table above:
 
 ```
-POST https://api.jatevo.ai/chat/completions/{model}
+POST https://jatevo.ai/api/x402/llm/{model}
 ```
 
 ## Examples
 
 ### Basic Chat
 ```javascript
-const response = await client.post('https://api.jatevo.ai/chat/completions/qwen', {
+const response = await client.post('/api/x402/llm/qwen', {
   messages: [
     { role: 'user', content: 'Explain async/await' }
   ],
@@ -91,7 +95,7 @@ const response = await client.post('https://api.jatevo.ai/chat/completions/qwen'
 
 ### Code Generation
 ```javascript
-const response = await client.post('https://api.jatevo.ai/chat/completions/qwen', {
+const response = await client.post('/api/x402/llm/qwen', {
   messages: [
     { role: 'system', content: 'You are an expert programmer.' },
     { role: 'user', content: 'Write a React component for a todo list' }
@@ -107,7 +111,7 @@ const messages = [
   { role: 'user', content: 'Show me a simple example' }
 ];
 
-const response = await client.post('https://api.jatevo.ai/chat/completions/kimi', {
+const response = await client.post('/api/x402/llm/kimi', {
   messages: messages
 });
 ```
@@ -124,9 +128,7 @@ const response = await client.post('https://api.jatevo.ai/chat/completions/kimi'
 
 3. **Environment Variable**: Store securely
 ```bash
-export PRIVATE_KEY="0x..."  # For Base
-# or
-export PRIVATE_KEY="[...]"  # For Solana (array format)
+export PRIVATE_KEY="0x..."  # Base network (starts with 0x)
 ```
 
 ## How It Works

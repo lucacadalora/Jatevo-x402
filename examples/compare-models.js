@@ -8,8 +8,9 @@
  *   2. Run: node compare-models.js
  */
 
-const { withPaymentInterceptor } = require('jatevo-x402-sdk');
-const axios = require('axios');
+import { withPaymentInterceptor } from 'x402-axios';
+import axios from 'axios';
+import { privateKeyToAccount } from 'viem/accounts';
 
 if (!process.env.PRIVATE_KEY) {
   console.error('Error: PRIVATE_KEY environment variable not set');
@@ -18,19 +19,23 @@ if (!process.env.PRIVATE_KEY) {
 
 const MODELS = [
   { id: 'qwen', name: 'Qwen 3 Coder', strength: 'Code generation' },
-  { id: 'glm', name: 'GLM 4.5', strength: 'Advanced reasoning' },
+  { id: 'glm-4.5', name: 'GLM 4.5', strength: 'Advanced reasoning' },
   { id: 'kimi', name: 'Kimi K2', strength: 'Long context' },
   { id: 'deepseek-v3.1', name: 'DeepSeek V3.1', strength: 'General chat' }
 ];
 
 async function compareModels(prompt) {
+  // Configure account with private key
+  const account = privateKeyToAccount(process.env.PRIVATE_KEY);
+  
+  // Create client with payment interceptor
   const client = withPaymentInterceptor(
-    axios.create(),
-    process.env.PRIVATE_KEY
+    axios.create({ baseURL: 'https://jatevo.ai' }),
+    account
   );
 
   console.log('🔍 Testing prompt:', prompt);
-  console.log('=' . repeat(60));
+  console.log('='.repeat(60));
 
   for (const model of MODELS) {
     try {
@@ -40,7 +45,7 @@ async function compareModels(prompt) {
       const start = Date.now();
 
       const response = await client.post(
-        `https://api.jatevo.ai/chat/completions/${model.id}`,
+        `/api/x402/llm/${model.id}`,
         {
           messages: [
             { role: 'user', content: prompt }

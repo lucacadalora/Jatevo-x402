@@ -2,23 +2,26 @@
 
 ## Base URL
 ```
-https://api.jatevo.ai
+https://jatevo.ai
 ```
 
 ## Chat Completions
 
 ### Endpoint
 ```
-POST /chat/completions/{model}
+POST /api/x402/llm/{model}
 ```
 
 ### Available Models
 - `qwen` - Qwen 3 Coder 480B
-- `glm` - GLM 4.5
+- `glm-4.5` - GLM 4.5
+- `glm-4.6` - GLM 4.6
 - `kimi` - Kimi K2
 - `deepseek-r1-0528` - DeepSeek R1
 - `deepseek-v3.1` - DeepSeek V3.1
 - `gpt-oss` - GPT-OSS 120B
+
+> ⚠️ **Note**: The `glm` identifier is deprecated. Use `glm-4.5` or `glm-4.6` instead.
 
 ### Request Body
 ```json
@@ -134,12 +137,18 @@ Maximum response length:
 
 ### JavaScript/Node.js
 ```javascript
-const { withPaymentInterceptor } = require('jatevo-x402-sdk');
-const axios = require('axios');
+import { withPaymentInterceptor } from 'x402-axios';
+import axios from 'axios';
+import { privateKeyToAccount } from 'viem/accounts';
 
-const client = withPaymentInterceptor(axios.create(), process.env.PRIVATE_KEY);
+const account = privateKeyToAccount(process.env.PRIVATE_KEY);
 
-const response = await client.post('https://api.jatevo.ai/chat/completions/qwen', {
+const client = withPaymentInterceptor(
+  axios.create({ baseURL: 'https://jatevo.ai' }),
+  account
+);
+
+const response = await client.post('/api/x402/llm/qwen', {
   messages: [{ role: 'user', content: 'Hello!' }]
 });
 ```
@@ -151,14 +160,14 @@ from x402_sdk import with_payment
 
 client = with_payment(requests.Session(), private_key)
 
-response = client.post('https://api.jatevo.ai/chat/completions/qwen', 
+response = client.post('https://jatevo.ai/api/x402/llm/qwen', 
   json={'messages': [{'role': 'user', 'content': 'Hello!'}]})
 ```
 
 ### cURL
 ```bash
 # Note: Requires manual payment header creation
-curl -X POST https://api.jatevo.ai/chat/completions/qwen \
+curl -X POST https://jatevo.ai/api/x402/llm/qwen \
   -H "Content-Type: application/json" \
   -H "X-Payment: <payment_proof>" \
   -d '{"messages": [{"role": "user", "content": "Hello!"}]}'
@@ -169,7 +178,8 @@ curl -X POST https://api.jatevo.ai/chat/completions/qwen \
 | Model | Best For | Speed | Context | Cost |
 |-------|----------|-------|---------|------|
 | qwen | Code generation | Fast | 128K | $0.01 |
-| glm | Complex reasoning | Medium | 128K | $0.01 |
+| glm-4.5 | Advanced reasoning | Medium | 128K | $0.01 |
+| glm-4.6 | Enhanced reasoning | Medium | 128K | $0.01 |
 | kimi | Long documents | Medium | 200K | $0.01 |
 | deepseek-r1-0528 | Deep analysis | Slow | 64K | $0.01 |
 | deepseek-v3.1 | General chat | Fast | 128K | $0.01 |
@@ -179,8 +189,8 @@ curl -X POST https://api.jatevo.ai/chat/completions/qwen \
 
 Our API is OpenAI-compatible. You can use OpenAI SDKs by:
 
-1. Change base URL to `https://api.jatevo.ai`
-2. Use model names from our list
+1. Change base URL to `https://jatevo.ai`
+2. Use endpoint path `/api/x402/llm/{model}`
 3. Handle 402 responses with x402 SDK
 
 ## Support

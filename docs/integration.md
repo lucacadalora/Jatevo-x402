@@ -4,33 +4,36 @@
 
 ### 1. Install SDK
 ```bash
-npm install jatevo-x402-sdk axios
+npm install x402-axios axios viem
 ```
 
 ### 2. Set Private Key
 ```bash
-# For Base (Ethereum)
+# For Base network
 export PRIVATE_KEY="0x..."
-
-# For Solana
-export PRIVATE_KEY="[1,2,3,...]"
 ```
 
 ### 3. Create Script
 ```javascript
-const { withPaymentInterceptor } = require('jatevo-x402-sdk');
-const axios = require('axios');
+import { withPaymentInterceptor } from 'x402-axios';
+import axios from 'axios';
+import { privateKeyToAccount } from 'viem/accounts';
 
-const client = withPaymentInterceptor(axios.create(), process.env.PRIVATE_KEY);
+const account = privateKeyToAccount(process.env.PRIVATE_KEY);
+
+const client = withPaymentInterceptor(
+  axios.create({ baseURL: 'https://jatevo.ai' }),
+  account
+);
 ```
 
 ## Common VSCode/Terminal Issues
 
-### Issue: "Cannot find module 'jatevo-x402-sdk'"
+### Issue: "Cannot find module 'x402-axios'"
 **Solution**: Make sure you're in the right directory and have run `npm install`
 ```bash
-ls node_modules/jatevo-x402-sdk  # Check if installed
-npm list jatevo-x402-sdk          # Check version
+ls node_modules/x402-axios  # Check if installed
+npm list x402-axios          # Check version
 ```
 
 ### Issue: "PRIVATE_KEY environment variable not set"
@@ -53,14 +56,17 @@ source ~/.bashrc
 ```bash
 # Create .env file
 echo 'PRIVATE_KEY=0x...' > .env
+```
 
-# Load in your script
-require('dotenv').config();
+**Load in your script (ESM)**:
+```javascript
+import dotenv from 'dotenv';
+dotenv.config();
 ```
 
 ### Issue: "Payment Required (402)" but you have USDC
 **Possible Causes**:
-1. Wrong network (Base vs Solana)
+1. Wrong network
 2. USDC on wrong network
 3. Insufficient balance (need $0.01 + gas)
 
@@ -68,25 +74,19 @@ require('dotenv').config();
 ```javascript
 // Check which network is being used
 console.log('Private key format:', process.env.PRIVATE_KEY.substring(0, 2));
-// "0x" = Base, "[" = Solana
+// "0x" = Base
 
 // Check balance (use wallet app or explorer)
 // Base: https://basescan.org/address/YOUR_ADDRESS
-// Solana: https://solscan.io/account/YOUR_ADDRESS
 ```
 
 ### Issue: "Invalid Private Key"
-**For Base/Ethereum**:
+**For Base network**:
 - Must be 64 hex characters after '0x'
 - Example: `0x1234...abcd` (66 chars total)
 
-**For Solana**:
-- Must be JSON array format
-- Example: `[1,2,3,...]` (64 numbers)
-
 **Export from Wallets**:
 - MetaMask: Settings → Security & Privacy → Show Private Keys
-- Phantom: Settings → Security → Export Private Key
 
 
 ### Issue: Running in CI/CD Pipeline
@@ -141,8 +141,10 @@ console.log('Private key format:', process.env.PRIVATE_KEY.substring(0, 2));
 ### 1. Environment Management
 ```javascript
 // Use dotenv for local development
+import dotenv from 'dotenv';
+
 if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config();
+  dotenv.config();
 }
 
 // Validate environment
@@ -185,8 +187,9 @@ if (process.env.DEBUG) {
 ### Quick Test Script
 ```javascript
 // test-connection.js
-const { withPaymentInterceptor } = require('jatevo-x402-sdk');
-const axios = require('axios');
+import { withPaymentInterceptor } from 'x402-axios';
+import axios from 'axios';
+import { privateKeyToAccount } from 'viem/accounts';
 
 async function test() {
   console.log('🔍 Testing Jatevo API connection...\n');
@@ -198,15 +201,19 @@ async function test() {
   }
   
   console.log('✅ Private key found');
-  console.log('📍 Network:', process.env.PRIVATE_KEY.startsWith('0x') ? 'Base' : 'Solana');
+  console.log('📍 Network: Base');
   
   // Test API call
   try {
-    const client = withPaymentInterceptor(axios.create(), process.env.PRIVATE_KEY);
+    const account = privateKeyToAccount(process.env.PRIVATE_KEY);
+    const client = withPaymentInterceptor(
+      axios.create({ baseURL: 'https://jatevo.ai' }),
+      account
+    );
     
     console.log('📡 Calling API...');
     const response = await client.post(
-      'https://api.jatevo.ai/chat/completions/qwen',
+      '/api/x402/llm/qwen',
       {
         messages: [{ role: 'user', content: 'Say "test successful"' }],
         max_tokens: 10
@@ -241,10 +248,10 @@ node test-connection.js
 
 ```bash
 # Check SDK version
-npm list jatevo-x402-sdk
+npm list x402-axios
 
 # Update SDK
-npm update jatevo-x402-sdk
+npm update x402-axios
 
 # View private key (be careful!)
 echo $PRIVATE_KEY | head -c 10

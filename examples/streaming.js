@@ -10,8 +10,9 @@
  *   2. Run: node streaming.js
  */
 
-const { withPaymentInterceptor } = require('jatevo-x402-sdk');
-const axios = require('axios');
+import { withPaymentInterceptor } from 'x402-axios';
+import axios from 'axios';
+import { privateKeyToAccount } from 'viem/accounts';
 
 if (!process.env.PRIVATE_KEY) {
   console.error('Error: PRIVATE_KEY environment variable not set');
@@ -19,16 +20,20 @@ if (!process.env.PRIVATE_KEY) {
 }
 
 async function streamChat() {
+  // Configure account with private key
+  const account = privateKeyToAccount(process.env.PRIVATE_KEY);
+  
+  // Create client with payment interceptor
   const client = withPaymentInterceptor(
-    axios.create(),
-    process.env.PRIVATE_KEY
+    axios.create({ baseURL: 'https://jatevo.ai' }),
+    account
   );
 
   try {
     console.log('🚀 Starting streaming response...\n');
 
     const response = await client.post(
-      'https://api.jatevo.ai/chat/completions/kimi',
+      '/api/x402/llm/kimi',
       {
         messages: [
           {

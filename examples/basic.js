@@ -8,8 +8,9 @@
  *   2. Run: node basic.js
  */
 
-const { withPaymentInterceptor } = require('jatevo-x402-sdk');
-const axios = require('axios');
+import { withPaymentInterceptor } from 'x402-axios';
+import axios from 'axios';
+import { privateKeyToAccount } from 'viem/accounts';
 
 // Check for private key
 if (!process.env.PRIVATE_KEY) {
@@ -19,17 +20,20 @@ if (!process.env.PRIVATE_KEY) {
 }
 
 async function main() {
-  // Create client with payment handler
+  // Configure account with private key
+  const account = privateKeyToAccount(process.env.PRIVATE_KEY);
+  
+  // Create client with payment interceptor
   const client = withPaymentInterceptor(
-    axios.create(),
-    process.env.PRIVATE_KEY
+    axios.create({ baseURL: 'https://jatevo.ai' }),
+    account
   );
 
   try {
     console.log('🚀 Calling Qwen model...\n');
 
     // Make API request
-    const response = await client.post('https://api.jatevo.ai/chat/completions/qwen', {
+    const response = await client.post('/api/x402/llm/qwen', {
       messages: [
         {
           role: 'user',
@@ -49,7 +53,7 @@ async function main() {
     console.error('❌ Error:', error.response?.data || error.message);
     
     if (error.response?.status === 402) {
-      console.error('\n💡 Tip: Check your USDC balance on Base or Solana');
+      console.error('\n💡 Tip: Check your USDC balance on Base network');
     }
   }
 }
