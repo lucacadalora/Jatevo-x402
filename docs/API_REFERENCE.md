@@ -185,6 +185,4 @@ Our API is OpenAI-compatible. You can use OpenAI SDKs by:
 
 ## Support
 
-- GitHub: [github.com/jatevo/x402-api](https://github.com/jatevo/x402-api)
-- Discord: [discord.gg/jatevo](https://discord.gg/jatevo)
-- Email: support@jatevo.ai
+- Support: [x.ai/jatevoid](https://x.ai/jatevoid)

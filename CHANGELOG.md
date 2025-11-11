@@ -5,6 +5,40 @@ All notable changes to the JATEVO x402 API SDK will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2025-11-11
+
+### Added
+- 🤖 **GLM 4.6 Support**: Added support for GLM 4.6, the latest generation Chinese-English bilingual model with enhanced reasoning capabilities
+- 📋 **Explicit Model Versioning**: Added `glm-4.5` and `glm-4.6` as separate model types for explicit version selection
+- 🔄 **Backward Compatibility**: Maintained `glm` alias for existing integrations (points to GLM 4.5)
+
+### Changed
+- Updated `ModelType` to include `glm-4.5` and `glm-4.6` as separate options
+- Modified `MODELS` object to expose all three GLM variants (glm, glm-4.5, glm-4.6)
+- Enhanced model descriptions to reflect accurate capabilities and versioning
+
+### Deprecated
+- ⚠️ **'glm' alias**: The generic 'glm' model identifier is deprecated in favor of explicit version selection (`glm-4.5` or `glm-4.6`). The alias currently points to `glm-4.5` for backward compatibility but may be removed in future major versions.
+
+### Migration Guide
+```javascript
+// Old (v1.1.0 and earlier) - Still works but deprecated
+const response = await client.chat('glm', { 
+  messages: [{ role: 'user', content: 'Hello' }] 
+});
+
+// New (v1.3.0) - Recommended approach
+const response = await client.chat('glm-4.6', { 
+  messages: [{ role: 'user', content: 'Hello' }] 
+});
+```
+
+### Technical Details
+- GLM 4.5 endpoint: `/api/x402/llm/glm-4.5`
+- GLM 4.6 endpoint: `/api/x402/llm/glm-4.6`
+- Both models maintain $0.01 USDC per request pricing
+- Full backward compatibility maintained for existing `glm` usage
+
 ## [1.1.0] - 2024-12-27
 
 ### Added
@@ -66,7 +100,6 @@ const client = new X402Client({
 - Automatic payment handling via x402 interceptor
 - Multi-model query endpoint for parallel model comparison
 - Session-based request handling
-- Automatic retry logic for failed payments
 - Cost estimation utilities
 
 ### Supported Models
@@ -98,4 +131,4 @@ const client = new X402Client({
 
 ---
 
-For more information, visit [GitHub Repository](https://github.com/jatevo/x402-api) or [Documentation](https://jatevo.ai/docs)
+For more information, visit [x.ai/jatevoid](https://x.ai/jatevoid)

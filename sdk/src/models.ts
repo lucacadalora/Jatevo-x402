@@ -11,9 +11,25 @@ export const MODELS: Record<ModelType, ModelInfo> = {
   },
   'glm': {
     id: 'glm',
+    name: 'GLM 4.5 (deprecated alias)',
+    description: 'Advanced reasoning and problem-solving model. Use "glm-4.5" or "glm-4.6" instead.',
+    endpoint: '/api/x402/llm/glm-4.5',
+    price: '$0.01',
+    priceInMicroUSDC: 10000
+  },
+  'glm-4.5': {
+    id: 'glm-4.5',
     name: 'GLM 4.5',
-    description: 'Advanced reasoning and problem-solving model',
-    endpoint: '/api/x402/llm/glm',
+    description: 'Advanced Chinese-English bilingual model for high-quality text generation',
+    endpoint: '/api/x402/llm/glm-4.5',
+    price: '$0.01',
+    priceInMicroUSDC: 10000
+  },
+  'glm-4.6': {
+    id: 'glm-4.6',
+    name: 'GLM 4.6',
+    description: 'Latest generation Chinese-English bilingual model with enhanced reasoning capabilities',
+    endpoint: '/api/x402/llm/glm-4.6',
     price: '$0.01',
     priceInMicroUSDC: 10000
   },

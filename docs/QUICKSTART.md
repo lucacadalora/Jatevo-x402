@@ -326,8 +326,7 @@ async function makeRequest(messages: any[]) {
 
 ## Getting Help
 
-- **GitHub Issues**: [Report bugs](https://github.com/jatevo/x402-api/issues)
-- **Email**: support@jatevo.ai
+- **Support**: [x.ai/jatevoid](https://x.ai/jatevoid)
 - **Docs**: [Full documentation](../README.md)
 
 ## Security Best Practices

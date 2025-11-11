@@ -45,8 +45,9 @@ All models are available at **$0.01 USDC per request** via the x402 payment prot
 
 ### GLM 4.5
 
-**Endpoint:** `/api/x402/llm/glm`
+**Endpoint:** `/api/x402/llm/glm-4.5`
 
+> ⚠️ **Note**: The generic `/api/x402/llm/glm` endpoint is deprecated. Use `/api/x402/llm/glm-4.5` or `/api/x402/llm/glm-4.6` instead.
 
 **Specifications:**
 - Parameters: ~100 billion (estimated)
@@ -75,6 +76,50 @@ All models are available at **$0.01 USDC per request** via the x402 payment prot
 - "Explain Chinese New Year customs to a Western audience"
 - "Generate product descriptions in multiple languages"
 ```
+
+---
+
+### GLM 4.6
+
+**Endpoint:** `/api/x402/llm/glm-4.6`
+
+**Specifications:**
+- Parameters: ~100 billion (estimated)
+- Context Window: 128,000 tokens
+- Architecture: GLM (General Language Model)
+- Training Data: Enhanced multilingual corpus with improved reasoning data
+
+**Strengths:**
+- ✅ **Enhanced reasoning capabilities** over GLM 4.5
+- ✅ Superior multilingual performance (Chinese/English)
+- ✅ Improved creative writing and storytelling
+- ✅ Better cultural context understanding
+- ✅ Advanced problem-solving abilities
+- ✅ More natural conversation flow
+
+**Best For:**
+- Complex multilingual applications
+- Advanced reasoning tasks
+- Creative content requiring nuance
+- Cross-cultural business communication
+- High-quality content localization
+- AI assistants requiring deep context
+
+**Example Use Cases:**
+```
+- "Analyze this business proposal and translate it to Mandarin with cultural adaptations"
+- "Write a compelling narrative that bridges Eastern and Western perspectives"
+- "Provide a nuanced explanation of cultural differences in business etiquette"
+- "Generate marketing content that resonates across different cultures"
+- "Solve this logic puzzle and explain the reasoning in both English and Chinese"
+```
+
+**Differences from GLM 4.5:**
+- Enhanced reasoning and problem-solving
+- Better handling of complex multilingual contexts
+- Improved quality in creative writing tasks
+- More sophisticated cultural understanding
+- Better at maintaining coherence in long conversations
 
 ---
 
@@ -224,6 +269,7 @@ All models are available at **$0.01 USDC per request** via the x402 payment prot
 |-------|-----------|---------|-----------|-------|----------|
 | **Qwen 3 Coder** | 480B | 128K | Code, Technical | Fast | Development |
 | **GLM 4.5** | ~100B | 128K | Multilingual, Creative | Medium | Content |
+| **GLM 4.6** | ~100B | 128K | Enhanced Reasoning | Medium | Advanced Tasks |
 | **Kimi K2** | ~100B | **200K** | Long Context | **Fastest** | Documents |
 | **DeepSeek R1** | ~70B | 64K | **Reasoning**, Math | Medium | Analysis |
 | **DeepSeek V3.1** | 671B | 128K | General, Code | Fast | Production |
@@ -332,6 +378,13 @@ Query all 6 models in parallel:
 - 🎨 Content generation
 - 💬 Natural conversation
 
+### Choose **GLM 4.6** for:
+- 🧠 Advanced reasoning tasks
+- 🌏 Complex multilingual projects
+- ✨ High-quality creative content
+- 🔄 Sophisticated cross-cultural communication
+- 💡 Problems requiring nuanced understanding
+
 ### Choose **Kimi K2 Instruct** for:
 - 📄 Long document analysis
 - 🔬 Research synthesis
@@ -383,6 +436,5 @@ Query all 6 models in parallel:
 
 For questions about model selection or performance:
 
-- **Email**: support@jatevo.ai
+- **Support**: [x.ai/jatevoid](https://x.ai/jatevoid)
 - **Documentation**: [API Reference](./API_REFERENCE.md) | [README](../README.md)
-- **GitHub Issues**: [Report an issue](https://github.com/jatevo/x402-api/issues)

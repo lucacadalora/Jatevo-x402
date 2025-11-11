@@ -83,7 +83,9 @@ export type PaymentData = EVMPaymentData | SolanaPaymentData;
 
 export type ModelType = 
   | 'qwen'
-  | 'glm' 
+  | 'glm'  // @deprecated Use 'glm-4.5' or 'glm-4.6' instead. This alias points to glm-4.5 for backward compatibility.
+  | 'glm-4.5'
+  | 'glm-4.6'
   | 'kimi'
   | 'deepseek-r1-0528'
   | 'deepseek-v3.1'

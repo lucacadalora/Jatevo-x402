@@ -42,6 +42,6 @@ When adding new examples:
 
 ## Questions?
 
-Reach out to support@jatevo.ai or open a discussion issue.
+Reach out via [x.ai/jatevoid](https://x.ai/jatevoid)
 
 Thank you for helping improve our documentation!

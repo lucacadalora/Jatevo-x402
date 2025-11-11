@@ -7,11 +7,11 @@ Pay-per-use AI models via micropayments. No API keys, no subscriptions. Just $0.
 x402 is an open payment standard that enables services to charge for API access using the HTTP `402 Payment Required` status code. Instead of managing API keys, subscriptions, or accounts, clients pay for exactly what they use through cryptocurrency micropayments.
 
 **How x402 Works:**
-1. **Request** → Your client sends a request to the API
-2. **402 Response** → Server returns payment requirements if payment needed
-3. **Payment** → Client signs a micropayment authorization (handled by SDK)
-4. **Retry** → Request automatically retries with payment proof
-5. **Response** → You receive the API response
+1. **Make Request** → Your client calls the API normally
+2. **Payment Processed** → SDK handles payment automatically in the background
+3. **Get Response** → You receive the AI response
+
+It's that simple - the SDK handles all payment details transparently!
 
 **Benefits:**
 - ✅ **No API Keys** - Your wallet address is your identity
@@ -20,7 +20,7 @@ x402 is an open payment standard that enables services to charge for API access 
 - ✅ **Instant Access** - Start using immediately with USDC
 - ✅ **Fair Pricing** - Same price for everyone: $0.01 per request
 
-The x402 protocol uses USDC (a USD stablecoin) for payments, ensuring predictable costs. Payments settle in ~200ms on Base network or ~2s on Solana network.
+The x402 protocol uses USDC (a USD stablecoin) for payments, ensuring predictable costs. Base network is generally faster than Solana for payment settlement.
 
 Learn more about the x402 standard at [x402.gitbook.io](https://x402.gitbook.io/x402)
 
@@ -59,11 +59,14 @@ All models cost $0.01 USDC per request:
 | Model | Best For | Context |
 |-------|----------|---------|
 | `qwen` | Code generation | 128K |
-| `glm` | Advanced reasoning | 128K |
+| `glm-4.5` | Multilingual content | 128K |
+| `glm-4.6` | Enhanced reasoning | 128K |
 | `kimi` | Long context tasks | 200K |
 | `deepseek-r1-0528` | Complex reasoning | 64K |
 | `deepseek-v3.1` | General chat | 128K |
 | `gpt-oss` | OpenAI compatibility | 32K |
+
+> ⚠️ **Note**: The `glm` identifier is deprecated. Use `glm-4.5` or `glm-4.6` instead for explicit version control.
 
 ## API Endpoints
 
@@ -128,11 +131,9 @@ export PRIVATE_KEY="[...]"  # For Solana (array format)
 
 ## How It Works
 
-1. You make an API request
-2. Server responds with payment request (HTTP 402)
-3. SDK signs a micro-payment ($0.01 USDC)
-4. Request retries with payment proof
-5. You get the AI response
+1. Make an API request
+2. SDK handles payment automatically in the background
+3. You get the AI response
 
 All handled automatically by the SDK!
 
@@ -163,6 +164,10 @@ See the [examples](./examples) folder for:
 - [Network Selection Guide](./docs/networks.md)
 - [API Reference](./docs/API_REFERENCE.md)
 - [Integration Guide](./docs/integration.md)
+
+## Support
+
+- Support: [x.ai/jatevoid](https://x.ai/jatevoid)
 
 ## License
 

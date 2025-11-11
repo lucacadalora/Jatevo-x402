@@ -69,7 +69,7 @@ interface SolanaPaymentData {
     confirmed?: boolean;
 }
 type PaymentData = EVMPaymentData | SolanaPaymentData;
-type ModelType = 'qwen' | 'glm' | 'kimi' | 'deepseek-r1-0528' | 'deepseek-v3.1' | 'gpt-oss';
+type ModelType = 'qwen' | 'glm' | 'glm-4.5' | 'glm-4.6' | 'kimi' | 'deepseek-r1-0528' | 'deepseek-v3.1' | 'gpt-oss';
 interface ModelInfo {
     id: ModelType;
     name: string;

@@ -13,7 +13,6 @@ Jatevo x402 API supports payments on both Base (Ethereum L2) and Solana networks
 ### Details
 - **Chain ID**: 8453 (mainnet)
 - **USDC Contract**: `0x833589fcd6edb6e08f4c7c32d4f71b54bda02913`
-- **Settlement Time**: ~200ms
 - **Gas Fees**: ~$0.001 per transaction
 
 ### Setup
@@ -32,7 +31,6 @@ const PRIVATE_KEY = "0x..."; // From MetaMask
 ### Details
 - **Network**: Solana mainnet
 - **USDC Mint**: `EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v`
-- **Settlement Time**: ~2s
 - **Gas Fees**: ~$0.00025 per transaction
 
 ### Setup
@@ -74,7 +72,7 @@ client.defaults.headers['Accept-Networks'] = 'base,solana';
 
 | Aspect | Base | Solana |
 |--------|------|--------|
-| Speed | Faster (~200ms) | Slower (~2s) |
+| Speed | Generally faster | Generally slower |
 | Fees | Low ($0.001) | Very Low ($0.00025) |
 | Tooling | Better | Good |
 | Liquidity | High | Very High |

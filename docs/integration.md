@@ -88,26 +88,6 @@ console.log('Private key format:', process.env.PRIVATE_KEY.substring(0, 2));
 - MetaMask: Settings → Security & Privacy → Show Private Keys
 - Phantom: Settings → Security → Export Private Key
 
-### Issue: "Transaction Failed" or timeout
-**Solutions**:
-1. Retry - Network might be congested
-2. Check RPC endpoint health
-3. Increase gas (Base) or priority fee (Solana)
-
-```javascript
-// Add retry logic
-async function callWithRetry(client, url, data, maxRetries = 3) {
-  for (let i = 0; i < maxRetries; i++) {
-    try {
-      return await client.post(url, data);
-    } catch (error) {
-      if (i === maxRetries - 1) throw error;
-      console.log(`Retry ${i + 1}/${maxRetries}...`);
-      await new Promise(r => setTimeout(r, 2000));
-    }
-  }
-}
-```
 
 ### Issue: Running in CI/CD Pipeline
 **GitHub Actions Example**:
@@ -255,8 +235,7 @@ node test-connection.js
 1. Check error message carefully
 2. Verify USDC balance on correct network
 3. Try the test script above
-4. Check GitHub issues
-5. Join Discord for support
+4. Contact support: [x.ai/jatevoid](https://x.ai/jatevoid)
 
 ## Common Commands
 
